@@ -55,3 +55,13 @@ func (r *Router) Delete(path string, handler http.HandlerFunc) {
 		handler(w, req)
 	})
 }
+
+func (r *Router) Patch(path string, handler http.HandlerFunc) {
+	r.HandleFunc(r.prefix+path, func(w http.ResponseWriter, req *http.Request) {
+		if req.Method != http.MethodPatch {
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+			return
+		}
+		handler(w, req)
+	})
+}
